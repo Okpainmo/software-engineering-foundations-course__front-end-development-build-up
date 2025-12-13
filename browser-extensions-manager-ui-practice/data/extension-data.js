@@ -1,4 +1,4 @@
-const extensionsData = [
+export const extensionsData = [
   {
     extensionName: 'DevLens',
     extensionSummary:

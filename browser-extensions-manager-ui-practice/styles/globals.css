@@ -72,6 +72,11 @@ body {
     align-items: center;
     margin-top: 20px;
   }
+
+  body {
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 
 @media (min-width: 900px) {
