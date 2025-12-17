@@ -1,6 +1,7 @@
 import { extensionsData } from '../data/extension-data.js';
 
 const cardsWrapper = document.getElementById('cardsWrapper');
+const removeButton = document.getElementById('removeButton');
 
 const myNumber = 25;
 const regularString = 'A string';
@@ -9,8 +10,28 @@ const dynamicString = `Dynamic String ${myNumber}`;
 console.log(regularString);
 console.log(dynamicString);
 
-function renderExtensionsData() {
-  const render = extensionsData.map((singleExtension, index) => {
+function deleteExtension(extName) {
+  const index = extensionsData.findIndex(
+    (ext) => ext.extensionName === extName
+  );
+
+  if (index === -1) return null;
+
+  const lastIndex = extensionsData.length - 1;
+
+  [extensionsData[index], extensionsData[lastIndex]] = [
+    extensionsData[lastIndex],
+    extensionsData[index],
+  ];
+
+  const deleted = extensionsData.pop();
+
+  renderExtensionsData(extensionsData);
+  return deleted;
+}
+
+function renderExtensionsData(data) {
+  const render = data.map((singleExtension, index) => {
     console.log(index);
 
     const imageUrl = `../assets/images/img-${index}.svg`;
@@ -32,8 +53,8 @@ function renderExtensionsData() {
                     </div>
                 </div>
             </div>
-            <div style="padding: 20px; display: flex; align-items: center; justify-content: space-between   ;">
-                <div style="font-size: 18px; padding: 8px 20px; border-radius: 20px; 
+            <div onclick="deleteExtension('${extensionName}')"id="removeButton" style="padding: 20px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="font-size: 18px; cursor: pointer; padding: 8px 20px; border-radius: 20px; 
                     background-color: hsl(225, 23%, 24%); border: 1.5px 
                     solid rgba(255, 255, 255, 0.5); width: 70px; text-align: center;
                    ">
@@ -42,10 +63,9 @@ function renderExtensionsData() {
                     </div>
                 </div>
                 <div class="toggle-switch"
-                    style="background-color: hsl(3, 71%, 56%); width: 60px; border-radius: 20px; height: 30px; display: flex; align-items: center;">
+                    style="background-color: hsl(3, 71%, 56%); width: 60px; cursor: pointer; border-radius: 20px; height: 30px; display: flex; align-items: center;">
                     <div class="toggle-switch-eyeball" style="background-color: white; color: white; width: 23px; 
                         border-radius: 100%; height: 23px; margin-left: 3px; text-align: center;">
-                        0
                     </div>
                 </div>
             </div>
@@ -56,7 +76,9 @@ function renderExtensionsData() {
   cardsWrapper.innerHTML = render.join(' ');
 }
 
-renderExtensionsData();
+renderExtensionsData(extensionsData);
+
+window.deleteExtension = deleteExtension;
 
 // Js Data Types.
 
@@ -67,3 +89,12 @@ renderExtensionsData();
 // 5. Object
 // 6. Null
 // 7. Undefined
+
+// Array Methods in JS.
+
+// - pop
+// - filter
+// - find
+// - map
+// - join
+// - slice
